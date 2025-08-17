@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🚀 College Event Registration 🌌</title>
+  <style>
+    :root {
+      --primary: #00cfff;
+      --secondary: #008cff;
+      --bg-dark: #0b0c10;
+      --bg-gradient1: #050014;
+      --bg-gradient2: #0a1030;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Orbitron", sans-serif;
+      background: radial-gradient(circle at top, var(--bg-gradient1), var(--bg-gradient2));
+      color: white;
+      overflow: hidden;
+    }
+
+    /* Twinkling stars background */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+      animation: moveStars 100s linear infinite;
+      z-index: 0;
+    }
+    @keyframes moveStars {
+      from { background-position: 0 0; }
+      to { background-position: -10000px 5000px; }
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(15, 15, 35, 0.9);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.4);
+      animation: fadeIn 0.8s ease both;
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(0, 200, 255, 0.4);
+    }
+    @keyframes fadeIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin: 0 0 18px;
+      text-align: center;
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--secondary), 0 0 20px var(--primary);
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 12px 0 6px;
+      color: #aee4ff;
+      text-shadow: 0 0 5px #0099ff;
+    }
+    input, select, button {
+      width: 100%;
+      border: 1px solid #0099ff;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 15px;
+      outline: none;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      transition: all 0.3s ease;
+    }
+    input::placeholder, select {
+      color: #bbb;
+    }
+    input:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 12px var(--primary);
+    }
+    button {
+      margin-top: 15px;
+      background: var(--primary);
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      border: none;
+      text-transform: uppercase;
+    }
+    button:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px var(--primary);
+    }
+    .error {
+      color: #ff6b6b;
+      font-size: 0.9rem;
+      min-height: 18px;
+      margin-top: 6px;
+    }
+    .success {
+      display: none;
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(0, 255, 170, 0.1);
+      color: #66ffcc;
+      border: 1px solid #00ffaa;
+      text-align: center;
+      font-weight: 600;
+      text-shadow: 0 0 10px #00ffaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🚀 College Event Registration 🌌</h1>
+    <form id="eventForm" novalidate>
+      <label for="name">👨‍🚀 Name</label>
+      <input id="name" name="name" type="text" placeholder="Enter your name" required />
+      <div class="error" id="nameError"></div>
+
+      <label for="email">📡 Email</label>
+      <input id="email" name="email" type="email" placeholder="you@example.com" required />
+      <div class="error" id="emailError"></div>
+
+      <label for="event">🪐 Select Event</label>
+      <select id="event" name="event" required>
+        <option value="">-- Choose an event --</option>
+        <option value="coding">💻 Coding Competition</option>
+        <option value="debate">🎤 Debate</option>
+        <option value="quiz">🧠 Quiz</option>
+        <option value="sports">🏆 Sports Meet</option>
+      </select>
+      <div class="error" id="eventError"></div>
+
+      <button type="submit">Launch 🚀</button>
+      <div class="success" id="successMsg">✨ Registration successful! Prepare for liftoff! 🚀</div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('eventForm');
+    const nameEl = document.getElementById('name');
+    const emailEl = document.getElementById('email');
+    const eventEl = document.getElementById('event');
+    const nameErr = document.getElementById('nameError');
+    const emailErr = document.getElementById('emailError');
+    const eventErr = document.getElementById('eventError');
+    const successMsg = document.getElementById('successMsg');
+
+    function validateEmail(email) {
+      const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/i;
+      return re.test(email);
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      successMsg.style.display = 'none';
+      let ok = true;
+
+      nameErr.textContent = '';
+      emailErr.textContent = '';
+      eventErr.textContent = '';
+
+      if (!nameEl.value.trim()) {
+        nameErr.textContent = 'Name is required 👨‍🚀';
+        ok = false;
+      }
+
+      if (!emailEl.value.trim()) {
+        emailErr.textContent = 'Email is required 📡';
+        ok = false;
+      } else if (!validateEmail(emailEl.value.trim())) {
+        emailErr.textContent = 'Enter a valid email 📡';
+        ok = false;
+      }
+
+      if (!eventEl.value) {
+        eventErr.textContent = 'Please select an event 🪐';
+        ok = false;
+      }
+
+      if (ok) {
+        successMsg.style.display = 'block';
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
